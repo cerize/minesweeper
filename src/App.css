@@ -44,3 +44,7 @@
   display: block;
   width: 100%;
 }
+
+.square-inner {
+  display: inline-block;
+}

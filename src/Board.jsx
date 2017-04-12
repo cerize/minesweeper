@@ -1,17 +1,7 @@
 import React, { Component } from 'react';
 import Square from './Square';
+import getInitialBoard from './getInitialBoard';
 
-const target = {
-    a1: 1,
-    a2: 2,
-    a3: 3,
-    b1: 1,
-    b2: 2,
-    b3: 3,
-    c1: 1,
-    c2: 2,
-    c3: 3
-};
 
 class BoardRow extends Component {
     render() {
@@ -22,7 +12,7 @@ class BoardRow extends Component {
                     row.map((elem, index) => {
                         return (
                             <div className="board-square">
-                                <Square  position={elem}/>
+                                <Square  board={this.props.board} position={elem}/>
                             </div>
                         )
                     })
@@ -34,13 +24,32 @@ class BoardRow extends Component {
 }
 
 
-const keys = Object.keys(target);
-
-const size = Math.sqrt(keys.length);
-console.log(size);
 
 class Board extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            status: 'initial'
+        };
+    }
+
+    componentWillMount() {
+        this.board = getInitialBoard();
+    }
+
+    onClick() {
+
+    }
+
     render() {;
+        const keys = Object.keys(this.board);
+        const size = Math.sqrt(keys.length);
+        const handler = {
+            get: (obj, prop) => {
+                //TODO
+            }
+        };
+        const proxyBoard = new Proxy(this.board, handler);
         return (
             <div >{
                 keys.map((i, index) => {
@@ -49,7 +58,7 @@ class Board extends Component {
                     <div >
                         {
                             (index % size === 0) && 
-                                <BoardRow row={keys.slice(index, index + size)}/>
+                                <BoardRow board={this.board} row={keys.slice(index, index + size)}/>
                         }
                     </div>
 

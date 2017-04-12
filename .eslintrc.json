@@ -1,0 +1,68 @@
+{
+    "parser": "babel-eslint",
+    "plugins": [
+    "react", "import"
+    ],
+    "ecmaFeatures": {
+        "experimentalObjectRestSpread": true
+    },
+    "globals": {
+        "$": true
+    },
+    "extends": "airbnb",
+    "root": true,
+    "env": {
+        "es6": true,
+        "browser": true,
+        "node": true
+    },
+    "rules": {
+        "linebreak-style": 0,
+        "semi": [2, "always"],
+        "quotes": [2, "single", "avoid-escape"],
+        "react/no-multi-comp": 0,
+        "import/default": 0,
+        "import/no-duplicates": 0,
+        "import/named": 0,
+        "import/namespace": 0,
+        "import/no-unresolved": 0,
+        "import/no-named-as-default": 0,
+        "comma-dangle": 0,
+        "strict": [2, "global"],
+        "indent": [2, 4, {"SwitchCase": 1}],
+        "no-console": 0,
+        "no-unused-vars": 1,
+        "no-alert": 0,
+        "no-multi-spaces": 0,
+        "quote-props": 0,
+        "max-len": 0,
+        "new-cap": 0,
+        "eol-last": 0,
+        "no-case-declaration": 0,
+        "arrow-body-style": 0,
+        "no-case-declarations": 0,
+        "no-trailing-spaces": 0,
+        "react/jsx-indent": 0,
+        "no-underscore-dangle": 0,
+        "global-require": 0,
+        "jsx-a11y/img-has-alt": 0,
+        "react/jsx-first-prop-new-line": 0,
+        "spaced-comment": 0,
+        "one-var": 0,
+        "react/jsx-indent-props": 0,
+        "no-param-reassign": 0,
+        "no-restricted-syntax": 0,
+        "react/sort-comp": 0,
+        "one-var-declaration-per-line": 0,
+        "no-empty": 0,
+        "no-shadow": 0,
+        "space-infix-ops": 0,
+        "react/jsx-closing-bracket-location": 0,
+        "no-nested-ternary": 0,
+        "react/jsx-no-bind": 1,
+        "no-useless-constructor": 1,
+        "guard-for-in": 0,
+        "no-prototype-builtins": 0,
+        "import/prefer-default-export": 0
+    }
+}
