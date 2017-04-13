@@ -12,7 +12,7 @@ class BoardRow extends Component {
                     row.map((elem, index) => {
                         return (
                             <div className="board-square">
-                                <Square  board={this.props.board} position={elem}/>
+                                <Square key={index} board={this.props.board} onClick={this.props.onClick} position={elem}/>
                             </div>
                         )
                     })
@@ -35,21 +35,31 @@ class Board extends Component {
 
     componentWillMount() {
         this.board = getInitialBoard();
+        const handler = {
+            get: (obj, prop) => {
+                return obj[prop];
+            },
+            set: function(obj, prop, value) {
+                this.handleOpen(obj, prop, value);
+            }
+        };
+        this.proxyBoard = new Proxy(this.board, handler);
     }
 
-    onClick() {
+    onClick = (e) => {
+        console.log('event', e.target);
+        console.log('this', this);
+        console.log('square clicked!');
+    }
+
+    handleOpen() {
 
     }
 
     render() {;
         const keys = Object.keys(this.board);
         const size = Math.sqrt(keys.length);
-        const handler = {
-            get: (obj, prop) => {
-                //TODO
-            }
-        };
-        const proxyBoard = new Proxy(this.board, handler);
+
         return (
             <div >{
                 keys.map((i, index) => {
@@ -58,7 +68,7 @@ class Board extends Component {
                     <div >
                         {
                             (index % size === 0) && 
-                                <BoardRow board={this.board} row={keys.slice(index, index + size)}/>
+                                <BoardRow key={index} board={this.proxyBoard} onClick={this.onClick} row={keys.slice(index, index + size)}/>
                         }
                     </div>
 
