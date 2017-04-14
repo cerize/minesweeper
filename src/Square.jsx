@@ -1,22 +1,26 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 
 
 class Square extends Component {
     render() {
-        const { board, position } = this.props;
+        console.log('rerendering');
+        const { square, handleLeftClick } = this.props;
         return (
-            <div onClick={this.props.onClick.bind(this)} id={position} className="square">
-                { board[position].isOpen ? (
-                    board[position].hasBomb ?
-                        <div className="square-inner">BOMB!</div> :
-                        <div className="square-inner">{board[position].bombsNear}</div> 
-
-                ) : 
+            <button onClick={handleLeftClick} id={square.position} className="square">
+                { square.isOpen ? (
+                    <div className="square-inner">{square.face}</div> 
+                ) : (
                     <div className="square-inner">CLOSED</div>
+                )
                 }
-            </div>
+            </button>
         );
     }
 }
+
+Square.propTypes = {
+    square: PropTypes.object,
+    handleLeftClick: PropTypes.func
+};
 
 export default Square;

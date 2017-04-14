@@ -40,6 +40,10 @@
   display: inline-block;
 }
 
+.board-row {
+  display: inline-block;
+}
+
 .new-row {
   display: block;
   width: 100%;

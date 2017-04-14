@@ -63,6 +63,7 @@
         "no-useless-constructor": 1,
         "guard-for-in": 0,
         "no-prototype-builtins": 0,
-        "import/prefer-default-export": 0
+        "import/prefer-default-export": 0,
+        "react/forbid-prop-types": 0
     }
 }
