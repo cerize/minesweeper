@@ -1,14 +1,78 @@
-const getInitialBoard = () => {
+const _getNeighbours = (position, boardSize) => {
+    const neighboursArr = [];
+    const i = +position.charAt(0);
+    const j = +position.charAt(1);
+
+    const n1 = `${i - 1}${j}`;
+    const n2 = `${i - 1}${j + 1}`;
+    const n3 = `${i}${j + 1}`;
+    const n4 = `${i + 1}${j + 1}`;
+    const n5 = `${i + 1}${j}`;
+    const n6 = `${i + 1}${j - 1}`;
+    const n7 = `${i}${j - 1}`;
+    const n8 = `${i - 1}${j - 1}`;
+
+    neighboursArr.push(n1, n2, n3, n4, n5, n6, n7, n8);
+
+    const validNeighboursArr = neighboursArr.filter((elem) => {
+        return !(~elem.indexOf('0') || ~elem.indexOf(`${boardSize + 1}`));
+    });
+
+    return validNeighboursArr;
+};
+
+
+
+const _getFace = (position, boardSize, bombsPositions) => {
+    if (bombsPositions.indexOf(position) !== -1) {
+        return 'bomb';
+    }
+    const neighbours = _getNeighbours(position, boardSize);
+
+    const face = bombsPositions.reduce((total, elem) => {
+        if (neighbours.indexOf(elem) !== -1) {
+            return total + 1;
+        }
+        return total;
+    }, 0);
+
+    return face;
+};
+
+const _getBombsPosition = (nBombs, boardSize) => {
+    const bombsArr = [];
+    while (bombsArr.length < nBombs) {
+        const p1 = Math.ceil(Math.random() * boardSize);
+        const p2 = Math.ceil(Math.random() * boardSize);
+        const position = `${p1}${p2}`;
+        if (bombsArr.indexOf(position) === -1) {
+            bombsArr.push(position);
+        }
+    }
+    return bombsArr;
+};
+
+
+const getInitialBoard = (boardSize) => {
+    const squares = {};
+    // Get the number of bombs in the board - 30% of the squares
+    const nBombs = Math.floor(boardSize * boardSize * 0.3);
+    // Assign positions to the bombs
+    const bombPositions = _getBombsPosition(nBombs, boardSize); 
+    
+    console.log('bombPositions', bombPositions);
+
+    for (let i = 1; i <= boardSize; i += 1) {
+        for (let j = 1; j <= boardSize; j += 1) {
+            const position = `${i}${j}`;
+            squares[position] = { position, isOpen: false, face: _getFace(position, boardSize, bombPositions) };
+        }
+    }
+
     return {
-        11: { position: 11, isOpen: false, face: '0' },
-        12: { position: 12, isOpen: false, face: 'cat' },
-        13: { position: 13, isOpen: false, face: '1' },
-        21: { position: 21, isOpen: false, face: '1' },
-        22: { position: 22, isOpen: false, face: '2' },
-        23: { position: 23, isOpen: true, face: '0' },
-        31: { position: 31, isOpen: false, face: 'bomb' },
-        32: { position: 32, isOpen: false, face: '1' },
-        33: { position: 33, isOpen: true, face: '1' }
+        state: 'initial',
+        nBombs,
+        squares
     };
 };
 
