@@ -7,10 +7,9 @@ import BoardRow from './BoardRow';
 
 
 class Board extends Component {
-    _handleLeftClick = (obj) => {
-        // console.log('event', e.target.id);
-        console.log('square clicked!');
-        this.props.board.state = obj.face === 'bomb' ? 'lost' : 'evaluating click';
+    _handleClick = (obj) => {
+        console.log('square clicked!', obj);
+        this.props.board.state = (obj.status === 'open' && obj.face === 'bomb') ? 'lost' : 'evaluating click';
     }
 
     render() {
@@ -29,7 +28,7 @@ class Board extends Component {
                             (index % size === 0) && 
                                 <BoardRow key={index} 
                                     board={this.props.board} 
-                                    handleLeftClick={this._handleLeftClick} 
+                                    handleClick={this._handleClick} 
                                     row={keys.slice(index, index + size)}
                                 />
                         }

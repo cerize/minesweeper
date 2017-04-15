@@ -2,14 +2,14 @@ import React, { PropTypes } from 'react';
 import Square from './Square';
 
 
-const BoardRow = ({ row, board, handleLeftClick }) => {
+const BoardRow = ({ row, board, handleClick }) => {
     const squareHandler = {
         set: (obj, prop, value) => {
             obj[prop] = value;
             console.log('inside set from squareHandler', obj);
             
             console.log('board in borad row', board);
-            handleLeftClick(obj);
+            handleClick(obj);
             return true;
         }
     };
@@ -26,15 +26,14 @@ const BoardRow = ({ row, board, handleLeftClick }) => {
                 })
             }
         </div>
-    );
-    
+    );  
 };
      
    
 BoardRow.propTypes = {
     row: PropTypes.array,
     board: PropTypes.object,
-    handleLeftClick: PropTypes.func
+    handleClick: PropTypes.func
 };
 
 export default BoardRow;

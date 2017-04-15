@@ -65,7 +65,7 @@ const getInitialBoard = (boardSize) => {
     for (let i = 1; i <= boardSize; i += 1) {
         for (let j = 1; j <= boardSize; j += 1) {
             const position = `${i}${j}`;
-            squares[position] = { position, isOpen: false, face: _getFace(position, boardSize, bombPositions) };
+            squares[position] = { position, status: 'closed', face: _getFace(position, boardSize, bombPositions) };
         }
     }
 
