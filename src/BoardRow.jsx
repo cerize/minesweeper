@@ -8,7 +8,6 @@ const BoardRow = ({ row, board, handleClick }) => {
             obj[prop] = value;
             console.log('inside set from squareHandler', obj);
             
-            console.log('board in borad row', board);
             handleClick(obj);
             return true;
         }

@@ -1,14 +1,15 @@
 import React, { Component, PropTypes } from 'react';
 import BoardRow from './BoardRow';
 
-
-
-
-
-
 class Board extends Component {
     _handleClick = (obj) => {
         console.log('square clicked!', obj);
+        if (obj.status === 'flag') {
+            this.props.board.nBombs -= 1;
+        }
+        if (obj.status === 'closed') {
+            this.props.board.nBombs += 1;
+        }
         this.props.board.state = (obj.status === 'open' && obj.face === 'bomb') ? 'lost' : 'evaluating click';
     }
 

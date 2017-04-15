@@ -40,6 +40,7 @@ class App extends Component {
                 To get started, edit <code>src/App.js</code> and save to reload.
               </p>
               <button onClick={() => { window.location.reload(); }}>Get a new board</button>
+              <div>Bombs: {`${proxyBoard.nBombs}`}</div>
               <Board board={proxyBoard} />
             </div>
         );
