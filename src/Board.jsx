@@ -15,14 +15,12 @@ class Board extends Component {
 
     render() {
         console.log('rendering board');
-        console.log('board', this.props.board);
         const keys = Object.keys(this.props.board.squares);
         const size = Math.sqrt(keys.length);
 
         return (
             <div >{
                 keys.map((i, index) => {
-                    console.log(index % size);
                     return (
                     <div >
                         {
