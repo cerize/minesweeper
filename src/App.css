@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  /*background-image: url("../public/field.jpg");*/
+  background-image: url("../public/minefield.png");
 }
 
 .App-logo {
@@ -9,9 +11,11 @@
 
 .App-header {
   background-color: #222;
-  height: 150px;
+  /*height: 150px;*/
+  font-family: 'Orbitron', sans-serif;
+  font-size: 30px;
   padding: 20px;
-  color: white;
+  color: red;
 }
 
 .App-intro {
@@ -21,6 +25,12 @@
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+.Game {
+  /*background-image: url("../public/field_t.png");*/
+  background-size: contain;
+
 }
 
 .square {
