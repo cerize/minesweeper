@@ -10,7 +10,39 @@ class Board extends Component {
         if (obj.status === 'closed') {
             this.props.board.nBombs += 1;
         }
-        this.props.board.state = (obj.status === 'open' && obj.face === 'bomb') ? 'lost' : 'evaluating click';
+        if (obj.status === 'open' && obj.face === 'bomb') {
+            this._openAllBombs(this.props.board.squares);
+            this.props.board.state = 'lost';
+        } else {
+            this.props.board.state = 'evaluating click';
+        }
+        if (this._checkVictory(this.props.board.squares)) {
+            this.props.board.state = 'win';
+        }
+    }
+
+    _openAllBombs = (squares) => {
+        for (const element in squares) {
+            const obj = squares[element];
+            if (obj.face === 'bomb') {
+                obj.status = 'open';
+            }
+        }
+    }
+
+    _checkVictory = (squares) => {
+        let allBombsFlaged = true;
+        let allNoBombsOpened = true;
+        for (const element in squares) {
+            const obj = squares[element];
+            if (obj.face === 'bomb' && obj.status !== 'flag') {
+                allBombsFlaged = false;
+            }
+            if (obj.face !== 'bomb' && obj.status === 'closed') {
+                allNoBombsOpened = false;
+            }
+        }
+        return allBombsFlaged || allNoBombsOpened;
     }
 
     render() {
@@ -19,7 +51,8 @@ class Board extends Component {
         const size = Math.sqrt(keys.length);
 
         return (
-            <div >{
+            <div className="board">
+            {
                 keys.map((i, index) => {
                     return (
                     <div >
@@ -39,6 +72,10 @@ class Board extends Component {
             {
                (this.props.board.state === 'lost') &&
                <div>LOST!!!</div>
+            }
+            {
+               (this.props.board.state === 'win') &&
+               <div>WIN!!!</div>
             }
             </div>
         );

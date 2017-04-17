@@ -55,8 +55,8 @@ const _getBombsPosition = (nBombs, boardSize) => {
 
 const getInitialBoard = (boardSize) => {
     const squares = {};
-    // Get the number of bombs in the board - 30% of the squares
-    const nBombs = Math.floor(boardSize * boardSize * 0.3);
+    // Get the number of bombs in the board - 20% of the squares
+    const nBombs = Math.floor(boardSize * boardSize * 0.2);
     // Assign positions to the bombs
     const bombPositions = _getBombsPosition(nBombs, boardSize); 
     
