@@ -2,7 +2,6 @@
 
 # dependencies
 /node_modules
-/public/scripts
 /public/font-awesome-4.7.0
 
 # testing

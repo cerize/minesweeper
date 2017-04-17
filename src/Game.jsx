@@ -14,14 +14,14 @@ class Game extends Component {
     }
     render() {
         console.log('rerendering game');
-        console.log('props match', this.props.match);
+        const { match } = this.props;
         const handler = {
             set: (obj, prop, value) => {
                 console.log('inside set from board');
                 obj[prop] = value;
                 this.setState((prevState, props) => {
                     return { 
-                        status: value
+                        status: true,
                     };
                 });
                 
@@ -31,18 +31,24 @@ class Game extends Component {
         const proxyBoard = new Proxy(board, handler);
 
         return (
-            <div className="Game">
-                {
-                    this.props.match.params.id !== 'dev' &&
-                     <ul>
+            <div className="game">
 
-                       
-                        <li><Link to="/dev">Dev</Link></li>
-                    </ul>
-                }
+                <div className="change-mode">
+                    {
+                        match.params.id !== 'dev' ? 
+                            <Link to="/dev">Go to Dev mode</Link> :
+                            <Link to="/">Go to Normal mode</Link> 
+                    }
+                </div>
+                
               <button onClick={() => { window.location.reload(); }}>Get a new board</button>
-              <div>Bombs: {proxyBoard.nBombs}</div>
-              <div>Mode: {`${this.props.match.params.id}`}</div>
+                {
+                    this.state.animate % 2 === 0 ? 
+                <div className="bomb-counter">Bombs: {proxyBoard.nBombs}</div> :
+                    null
+                }
+
+
               <Board board={proxyBoard} />
             </div>
         );
