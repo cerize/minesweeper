@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import BoardRow from './BoardRow';
 
+// states of the board: initial, evaluating click, 
+
 class Board extends Component {
     _handleClick = (obj) => {
         console.log('square clicked!', obj);
@@ -8,6 +10,7 @@ class Board extends Component {
             this.props.board.nBombs -= 1;
         }
         if (obj.status === 'closed') {
+            this.props.board.state = 'evaluating click';
             this.props.board.nBombs += 1;
         }
         if (obj.status === 'open' && obj.face === 'bomb') {
@@ -46,6 +49,7 @@ class Board extends Component {
     }
 
     render() {
+        const { board, mode } = this.props;
         console.log('rendering board');
         const keys = Object.keys(this.props.board.squares);
         const size = Math.sqrt(keys.length);
@@ -59,7 +63,8 @@ class Board extends Component {
                         {
                             (index % size === 0) && 
                                 <BoardRow key={index} 
-                                    board={this.props.board} 
+                                    board={board} 
+                                    mode={mode}
                                     handleClick={this._handleClick} 
                                     row={keys.slice(index, index + size)}
                                 />
@@ -83,7 +88,8 @@ class Board extends Component {
 }
 
 Board.propTypes = {
-    board: PropTypes.object
+    board: PropTypes.object,
+    mode: PropTypes.string
 };
 
 export default Board;

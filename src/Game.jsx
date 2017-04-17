@@ -15,20 +15,17 @@ class Game extends Component {
     render() {
         console.log('rerendering game');
         const { match } = this.props;
-        const handler = {
+        const gameHandler = {
             set: (obj, prop, value) => {
                 console.log('inside set from board');
                 obj[prop] = value;
-                this.setState((prevState, props) => {
-                    return { 
-                        status: true,
-                    };
-                });
+                // even if the new value is the same as previous, still rerenders
+                this.forceUpdate();
                 
                 return true;
             }
         };
-        const proxyBoard = new Proxy(board, handler);
+        const proxyBoard = new Proxy(board, gameHandler);
 
         return (
             <div className="game">
@@ -43,13 +40,12 @@ class Game extends Component {
                 
               <button onClick={() => { window.location.reload(); }}>Get a new board</button>
                 {
-                    this.state.animate % 2 === 0 ? 
-                <div className="bomb-counter">Bombs: {proxyBoard.nBombs}</div> :
-                    null
+                 
+                <div className="bomb-counter">Bombs: {proxyBoard.nBombs}</div>
                 }
 
 
-              <Board board={proxyBoard} />
+              <Board board={proxyBoard} mode={match.params.id} />
             </div>
         );
     }

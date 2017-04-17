@@ -11,39 +11,63 @@ class Square extends Component {
         this.props.square.status = this.props.square.status === 'closed' ? 'flag' : 'closed';
     };
 
-    _onLeftClick = (e) => {
-        // this.props.square.status = 'question';
+    _onLeftClick = () => {
+        // Triggers opening the question modal
+        if (this.props.mode === 'dev') {
+            this.props.square.status = 'question';
+            return;
+        }
         this.props.square.status = 'open'; 
+    }
+
+    _onCloseModal = () => {
+        console.log('modal closed');
+        this.props.square.status = 'quitQuestion';
+    }
+
+    _onSubmitAnswer = (e) => {
+        const userAnswer = this.userAnswer.value;
+        console.log('input user', this.userAnswer.value);
+        console.log('real answer', this.props.square.answer);
+        e.preventDefault();
+        if (userAnswer === this.props.square.answer) {
+            console.log('rightAnswer!');
+            this.props.square.status = 'open';
+            return;
+        }
+        console.log('wrong answer');
     }
     
     render() {
-        console.log('rerendering square');
-        const { square } = this.props;
+        const { square, mode } = this.props;
+        const { status, position, face, question } = square;
+        console.log('rerendering square, mode:', mode);
         return (
-            <button onClick={this._onLeftClick} onContextMenu={this._onRightClick} id={square.position} className={square.status === 'closed' ? 'square closed' : 'square'}>
-                { square.status === 'open' ? (
-                    <div className="square-inner">{square.face === 'bomb' ? <i className="fa fa-bomb" /> : square.face}</div> 
-                ) : square.status === 'closed' ? (
-                    <div className="square-inner">&nbsp;</div>
-                ) : (
+            <button onClick={this._onLeftClick} onContextMenu={this._onRightClick} id={position} className={(status === 'closed' || status === 'quitQuestion') ? 'square closed' : 'square'}>
+                { status === 'open' ? (
+                    <div className="square-inner">{face === 'bomb' ? <i className="fa fa-bomb" /> : face}</div> 
+                ) : status === 'flag' ? (
                     <div className="square-inner"><i className="fa fa-flag" /></div>
+                ) : (
+                    <div className="square-inner">&nbsp;</div>
                 )
                 }
                 {
-                    /*<Modal
-                        isOpen={square.status === 'question'}
-                        onAfterOpen={this.afterOpenModal}
-                        onRequestClose={this.closeModal}
-                        contentLabel="Example Modal"
+                    (mode === 'dev') &&
+                    <Modal
+                        isOpen={status === 'question'}
+                        onRequestClose={this._onCloseModal}
+                        contentLabel={question}
                         >
 
-                        <h2 ref="subtitle">Hello</h2>
-                        <button onClick={this.closeModal}>close</button>
-                        <div>I am a modal</div>
-                        <form>
-                            <input />
+                        <h2>Hello</h2>
+                        <button onClick={this._onCloseModal}>close</button>
+                        <div>{question}</div>
+                        <form onSubmit={this._onSubmitAnswer}>
+                            <input name="answer" ref={(input) => { this.userAnswer = input; }} />
+                            <input type="submit" value="Submit" />
                         </form>
-                    </Modal>*/
+                    </Modal>
                 }
             </button>
         );
@@ -52,6 +76,7 @@ class Square extends Component {
 
 Square.propTypes = {
     square: PropTypes.object,
+    mode: PropTypes.string,
 };
 
 export default Square;
