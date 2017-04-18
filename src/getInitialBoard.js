@@ -65,7 +65,7 @@ const getInitialBoard = (boardSize) => {
     for (let i = 1; i <= boardSize; i += 1) {
         for (let j = 1; j <= boardSize; j += 1) {
             const position = `${i}${j}`;
-            squares[position] = { position, status: 'closed', face: _getFace(position, boardSize, bombPositions), question: '1 + 1 ?', answer: '2' };
+            squares[position] = { position, status: 'closed', face: _getFace(position, boardSize, bombPositions), question: 'Which javascript built-in object allow you to intercept operations and implement custom behavior?', answer: 'proxy' };
         }
     }
 
@@ -76,5 +76,5 @@ const getInitialBoard = (boardSize) => {
     };
 };
 
-// can open a cat - prize: open a few squares
+// TODO: can open a cat - prize: open a few squares
 export default getInitialBoard;

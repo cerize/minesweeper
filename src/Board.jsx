@@ -1,11 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import BoardRow from './BoardRow';
 
-// states of the board: initial, evaluating click, 
+// states of the board: initial, evaluating click, lost, win
 
 class Board extends Component {
     _handleClick = (obj) => {
-        console.log('square clicked!', obj);
         if (obj.status === 'flag') {
             this.props.board.nBombs -= 1;
         }
@@ -50,7 +49,6 @@ class Board extends Component {
 
     render() {
         const { board, mode } = this.props;
-        console.log('rendering board');
         const keys = Object.keys(this.props.board.squares);
         const size = Math.sqrt(keys.length);
 
@@ -73,14 +71,6 @@ class Board extends Component {
 
                     );
                 })
-            }
-            {
-               (this.props.board.state === 'lost') &&
-               <div>LOST!!!</div>
-            }
-            {
-               (this.props.board.state === 'win') &&
-               <div>WIN!!!</div>
             }
             </div>
         );

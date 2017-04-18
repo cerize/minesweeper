@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import Modal from 'react-modal';
-// import QuestionModal from './QuestionModal';
 
 class Square extends Component {
     _onRightClick = (e) => {
@@ -27,18 +26,26 @@ class Square extends Component {
 
     _onSubmitAnswer = (e) => {
         const userAnswer = this.userAnswer.value;
-        console.log('input user', this.userAnswer.value);
-        console.log('real answer', this.props.square.answer);
         e.preventDefault();
         if (userAnswer === this.props.square.answer) {
-            console.log('rightAnswer!');
             this.props.square.status = 'open';
             return;
         }
-        console.log('wrong answer');
+        this.props.square.status = 'wrongAnswer';
     }
     
     render() {
+        const customStyle = {
+            content: {
+                top: '50%',
+                left: '50%',
+                right: 'auto',
+                bottom: 'auto',
+                marginRight: '-50%',
+                transform: 'translate(-50%, -50%)'
+            }
+        };
+
         const { square, mode } = this.props;
         const { status, position, face, question } = square;
         console.log('rerendering square, mode:', mode);
@@ -55,18 +62,28 @@ class Square extends Component {
                 {
                     (mode === 'dev') &&
                     <Modal
-                        isOpen={status === 'question'}
+                        isOpen={status === 'question' || status === 'wrong-answer'}
                         onRequestClose={this._onCloseModal}
                         contentLabel={question}
-                        >
-
-                        <h2>Hello</h2>
-                        <button onClick={this._onCloseModal}>close</button>
-                        <div>{question}</div>
-                        <form onSubmit={this._onSubmitAnswer}>
-                            <input name="answer" ref={(input) => { this.userAnswer = input; }} />
-                            <input type="submit" value="Submit" />
-                        </form>
+                        style={customStyle}
+                    >
+                        <div className="modal">
+                            <h2>Dev Challenge</h2>
+                            <div>{question}</div>
+                            <form onSubmit={this._onSubmitAnswer}>
+                                <input name="answer" ref={(input) => { this.userAnswer = input; }} />
+                                <div className="modal-buttons">
+                                    <button onClick={this._onCloseModal}>Cancel</button>
+                                    <input type="submit" value="Submit" />
+                                </div>
+                            </form>
+                            {
+                                status === 'wrongAnswer' &&
+                                <div className="wrong-answer">
+                                    Incorret Answer
+                                </div>
+                            }
+                        </div>
                     </Modal>
                 }
             </button>

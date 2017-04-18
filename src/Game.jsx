@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import getInitialBoard from './getInitialBoard';
 import Board from './Board';
 
-const board = getInitialBoard(5);
+const board = getInitialBoard(7);
 
 class Game extends Component {
     constructor(props) {
@@ -29,23 +29,32 @@ class Game extends Component {
 
         return (
             <div className="game">
-
-                <div className="change-mode">
-                    {
-                        match.params.id !== 'dev' ? 
-                            <Link to="/dev">Go to Dev mode</Link> :
-                            <Link to="/">Go to Normal mode</Link> 
-                    }
+                <div >
+                    <button className="new-board" onClick={() => { window.location.reload(); }}>Get a new board</button>
+                    <div className="change-mode">
+                        {
+                            match.params.id !== 'dev' ? 
+                                <Link to="/dev">Go to Dev mode</Link> :
+                                <Link to="/">Go to Normal mode</Link> 
+                        }
+                    </div>
                 </div>
-                
-              <button onClick={() => { window.location.reload(); }}>Get a new board</button>
-                {
-                 
-                <div className="bomb-counter">Bombs: {proxyBoard.nBombs}</div>
-                }
-
-
-              <Board board={proxyBoard} mode={match.params.id} />
+                <div className="board-panel">
+                    <div className="top-menu">
+                        {
+                            <div className="bomb-counter">Bombs: {proxyBoard.nBombs}</div>
+                        }
+                        {
+                            (proxyBoard.state === 'lost') &&
+                            <div>Too bad!!!</div>
+                        }
+                        {
+                            (proxyBoard.state === 'win') &&
+                            <div>Well done!!</div>
+                        }
+                    </div>
+                    <Board board={proxyBoard} mode={match.params.id} />
+                </div>
             </div>
         );
     }
