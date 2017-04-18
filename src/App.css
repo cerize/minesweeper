@@ -85,6 +85,13 @@
   text-align: left;
 }
 
+.lost-message {
+  color: red;
+}
+
+.win-message {
+  color: green;
+}
 .square {
   background-color: #336733;
   width: 50px;

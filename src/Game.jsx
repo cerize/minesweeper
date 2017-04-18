@@ -6,22 +6,13 @@ import Board from './Board';
 const board = getInitialBoard(7);
 
 class Game extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            status: board.status
-        };
-    }
     render() {
-        console.log('rerendering game');
         const { match } = this.props;
         const gameHandler = {
             set: (obj, prop, value) => {
-                console.log('inside set from board');
                 obj[prop] = value;
                 // even if the new value is the same as previous, still rerenders
                 this.forceUpdate();
-                
                 return true;
             }
         };
@@ -46,11 +37,11 @@ class Game extends Component {
                         }
                         {
                             (proxyBoard.state === 'lost') &&
-                            <div>Too bad!!!</div>
+                            <div className="lost-message">Too bad!!!</div>
                         }
                         {
                             (proxyBoard.state === 'win') &&
-                            <div>Well done!!</div>
+                            <div className="win-message">Well done!!</div>
                         }
                     </div>
                     <Board board={proxyBoard} mode={match.params.id} />

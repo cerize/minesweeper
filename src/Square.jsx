@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import Modal from 'react-modal';
+import modalStyle from './modalStyle';
 
 class Square extends Component {
     _onRightClick = (e) => {
@@ -25,8 +26,8 @@ class Square extends Component {
     }
 
     _onSubmitAnswer = (e) => {
-        const userAnswer = this.userAnswer.value;
         e.preventDefault();
+        const userAnswer = this.userAnswer.value;
         if (userAnswer === this.props.square.answer) {
             this.props.square.status = 'open';
             return;
@@ -35,20 +36,8 @@ class Square extends Component {
     }
     
     render() {
-        const customStyle = {
-            content: {
-                top: '50%',
-                left: '50%',
-                right: 'auto',
-                bottom: 'auto',
-                marginRight: '-50%',
-                transform: 'translate(-50%, -50%)'
-            }
-        };
-
         const { square, mode } = this.props;
         const { status, position, face, question } = square;
-        console.log('rerendering square, mode:', mode);
         return (
             <button onClick={this._onLeftClick} onContextMenu={this._onRightClick} id={position} className={(status === 'closed' || status === 'quitQuestion') ? 'square closed' : 'square'}>
                 { status === 'open' ? (
@@ -62,10 +51,10 @@ class Square extends Component {
                 {
                     (mode === 'dev') &&
                     <Modal
-                        isOpen={status === 'question' || status === 'wrong-answer'}
+                        isOpen={status === 'question' || status === 'wrongAnswer'}
                         onRequestClose={this._onCloseModal}
                         contentLabel={question}
-                        style={customStyle}
+                        style={modalStyle}
                     >
                         <div className="modal">
                             <h2>Dev Challenge</h2>

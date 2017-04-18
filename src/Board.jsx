@@ -5,19 +5,23 @@ import BoardRow from './BoardRow';
 
 class Board extends Component {
     _handleClick = (obj) => {
+        // Flag placed: decrease the number of bombs
         if (obj.status === 'flag') {
             this.props.board.nBombs -= 1;
         }
+        // Flag removed: decrease the number of bombs
         if (obj.status === 'closed') {
             this.props.board.state = 'evaluating click';
             this.props.board.nBombs += 1;
         }
+
         if (obj.status === 'open' && obj.face === 'bomb') {
             this._openAllBombs(this.props.board.squares);
             this.props.board.state = 'lost';
         } else {
             this.props.board.state = 'evaluating click';
         }
+        
         if (this._checkVictory(this.props.board.squares)) {
             this.props.board.state = 'win';
         }
