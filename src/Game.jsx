@@ -12,6 +12,7 @@ class Game extends Component {
             set: (obj, prop, value) => {
                 obj[prop] = value;
                 // even if the new value is the same as previous, still rerenders
+                // necessary because React won't see changes in deep nested props
                 this.forceUpdate();
                 return true;
             }
