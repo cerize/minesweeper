@@ -1,4 +1,5 @@
 import getRandomQuestion from './getRandomQuestion';
+import { SQUARE_STATUS } from './constants';
 
 const _getNeighbours = (position, boardSize) => {
     const neighboursArr = [];
@@ -60,15 +61,13 @@ const getInitialBoard = (boardSize) => {
     // Assign positions to the bombs
     const bombPositions = _getBombsPosition(nBombs, boardSize); 
     
-    console.log('bombPositions', bombPositions);
-
     for (let i = 1; i <= boardSize; i += 1) {
         for (let j = 1; j <= boardSize; j += 1) {
             const position = `${i}${j}`;
             const question = getRandomQuestion();
             squares[position] = { 
                 position, 
-                status: 'closed', 
+                status: SQUARE_STATUS.closed, 
                 face: _getFace(position, boardSize, bombPositions), 
                 question: question.title, 
                 answer: question.answer 
@@ -77,7 +76,7 @@ const getInitialBoard = (boardSize) => {
     }
 
     return {
-        state: 'initial',
+        state: SQUARE_STATUS.initial,
         nBombs,
         squares
     };
