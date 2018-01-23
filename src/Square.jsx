@@ -21,7 +21,6 @@ class Square extends Component {
     }
 
     _onCloseModal = () => {
-        console.log('modal closed');
         this.props.square.status = 'quitQuestion';
     }
 
@@ -34,19 +33,43 @@ class Square extends Component {
         }
         this.props.square.status = 'wrongAnswer';
     }
+
+    _getSquareFace = (status, face) => {
+        switch (status) {
+            case 'open':
+                return (
+                    <div className="square-inner">
+                            {face === 'bomb' ? <i className="fa fa-bomb" /> : face}
+                        </div> 
+                );
+            case 'flag':
+                return (
+                    <div className="square-inner">
+                        <i className="fa fa-flag" />
+                    </div>
+                );
+            default:
+                return (
+                    <div className="square-inner">
+                        &nbsp;
+                    </div>);
+        }
+    }
     
     render() {
         const { square, mode } = this.props;
         const { status, position, face, question } = square;
+        const squareFace = this._getSquareFace(status, face);
+
         return (
-            <button onClick={this._onLeftClick} onContextMenu={this._onRightClick} id={position} className={(status === 'closed' || status === 'quitQuestion') ? 'square closed' : 'square'}>
-                { status === 'open' ? (
-                    <div className="square-inner">{face === 'bomb' ? <i className="fa fa-bomb" /> : face}</div> 
-                ) : status === 'flag' ? (
-                    <div className="square-inner"><i className="fa fa-flag" /></div>
-                ) : (
-                    <div className="square-inner">&nbsp;</div>
-                )
+            <button 
+                onClick={this._onLeftClick} 
+                onContextMenu={this._onRightClick} 
+                id={position} 
+                className={(status === 'closed' || status === 'quitQuestion') ? 'square closed' : 'square'}
+            >
+                { 
+                    squareFace
                 }
                 {
                     (mode === 'dev') &&

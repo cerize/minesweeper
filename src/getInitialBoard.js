@@ -1,3 +1,5 @@
+import getRandomQuestion from './getRandomQuestion';
+
 const _getNeighbours = (position, boardSize) => {
     const neighboursArr = [];
     const i = +position.charAt(0);
@@ -20,8 +22,6 @@ const _getNeighbours = (position, boardSize) => {
 
     return validNeighboursArr;
 };
-
-
 
 const _getFace = (position, boardSize, bombsPositions) => {
     if (bombsPositions.indexOf(position) !== -1) {
@@ -65,7 +65,14 @@ const getInitialBoard = (boardSize) => {
     for (let i = 1; i <= boardSize; i += 1) {
         for (let j = 1; j <= boardSize; j += 1) {
             const position = `${i}${j}`;
-            squares[position] = { position, status: 'closed', face: _getFace(position, boardSize, bombPositions), question: 'Which javascript built-in object allow you to intercept operations and implement custom behavior?', answer: 'proxy' };
+            const question = getRandomQuestion();
+            squares[position] = { 
+                position, 
+                status: 'closed', 
+                face: _getFace(position, boardSize, bombPositions), 
+                question: question.title, 
+                answer: question.answer 
+            };
         }
     }
 
